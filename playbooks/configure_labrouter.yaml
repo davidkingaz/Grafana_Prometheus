@@ -1,0 +1,9 @@
+---
+# code: language=ansible
+- name: Configure network devices
+  hosts: labrouter
+  gather_facts: false
+
+  roles:
+    - configure_hostname
+    - configure_interface

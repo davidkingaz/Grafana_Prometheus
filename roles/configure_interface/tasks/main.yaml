@@ -1,0 +1,10 @@
+---
+# File: roles/configure_interface/tasks/main.yml
+
+- name: Configure interface for Arista device
+  ansible.builtin.import_tasks: eos_interface.yaml
+  when: ansible_network_os == "eos"
+
+- name: Configure interface for Cisco device
+  ansible.builtin.import_tasks: ios_interface.yaml
+  when: ansible_network_os == "ios"

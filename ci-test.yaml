@@ -1,0 +1,18 @@
+---
+# This playbook is used to gather facts from a Cisco router and store them in a JSON file.
+- name: Gather facts from Cisco router
+  hosts: labrouter
+  gather_facts: false
+
+  tasks:
+    - name: Gather ios facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+      register: result
+
+    - name: Store the facts to a JSON file
+      ansible.builtin.copy:
+        content: "{{ result | to_nice_json }}"
+        dest: "./facts.json"
+        mode: preserve

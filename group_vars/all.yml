@@ -1,0 +1,5 @@
+---
+# Credentials for the connecting to the device
+ansible_user: ansible
+ansible_ssh_pass: ansible
+host_key_checking: false

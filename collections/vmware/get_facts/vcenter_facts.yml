@@ -1,0 +1,15 @@
+---
+- name: Gather VM Facts from vCenter
+  hosts: localhost
+  tasks:
+    - name: Gather VM Facts
+      community.vmware.vmware_vm_info:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+      register: vm_facts
+
+    - name: Display VM Facts
+      debug:
+        var: vm_facts

@@ -1,0 +1,36 @@
+---
+device_hostname: labrouter
+http_server: false
+interfaces:
+  - name: Loopback0
+    ip: 10.200.10.1/32
+    description: "Management interface"
+  - name: GigabitEthernet1
+    ip: 192.168.4.204/23
+    description: "Primary connectivity to outside: Home LAN"
+  - name: GigabitEthernet2
+    ip: 172.18.1.1/30
+    description: "Connectivity to CiscoSwitch"
+  - name: GigabitEthernet3
+    ip: 192.200.1.1/30
+    description: "Connectivity to ..."
+  - name: GigabitEthernet4
+    ip: 192.200.2.1/30
+    description: "Connectivity to ..."
+ntp:
+  source: "GigabitEthernet1"
+ospf:
+  - id: 1
+    network:
+      - ip: "10.0.0.0"
+        mask: "0.255.255.255"
+        area: 0
+      - ip: "192.168.0.0"
+        mask: "0.0.255.255"
+        area: 0
+      - ip: "172.18.0.0"
+        mask: "0.0.255.255"
+        area: 0
+      - ip: "192.200.0.0"
+        mask: "0.0.255.255"
+        area: 0
