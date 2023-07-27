@@ -1,6 +1,6 @@
 ---
 - name: Gather VM Facts from vCenter
-  hosts: localhost
+  hosts: vcsa
   tasks:
     - name: Gather VM Facts
       community.vmware.vmware_vm_info:

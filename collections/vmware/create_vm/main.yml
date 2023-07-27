@@ -1,23 +1,22 @@
 ---
-- name: Create a virtual machine on given ESXi hostname
+- name: Create a virtual machine on vCenter Cluster
   community.vmware.vmware_guest:
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
-    folder: /DC1/vm/
-    name: test_vm_0001
+    folder: /{{ vcenter_datacenter }}/{{ vcenter_folder }}
+    name: "{{ device_hostname }}"
     state: poweredon
-    guest_id: centos64Guest
-    # This is hostname of particular ESXi server on which user wants VM to be deployed
-    esxi_hostname: "{{ esxi_hostname }}"
+    guest_id: "{{ guest_os }}"
+    cluster: "{{ vcenter_cluster }}"
     disk:
-      - size_gb: 10
-        type: thin
-        datastore: datastore1
+      - size_gb: "{{ host_disk_size }}"
+        type: "{{ vcenter_diskprov_type }}"
+        datastore: "{{ vcenter_datastore }}"
     hardware:
-      memory_mb: 512
-      num_cpus: 4
-      scsi: paravirtual
+      memory_mb: "{{ host_memory_mb }}"
+      num_cpus: "{{ host_num_cpus }}"
+      scsi: "{{ host_scsi }}"
     networks:
       - name: VM Network
         mac: aa:bb:dd:aa:00:14

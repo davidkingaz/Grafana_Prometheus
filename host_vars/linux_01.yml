@@ -1,0 +1,26 @@
+# Number of CPUs
+# Amount of memory
+# Disk configuration
+# Network configuration
+# OS type and version
+# Application configuration
+
+guest:
+  guest_hostname: "Linux01"
+  guest_os: "Ubuntu_64"
+  guest_cpu: "Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz"
+  guest_memory: "16GB"
+  guest_disk: "1TB"
+disk:
+  guest_disk_size: "25"
+  guest_diskprov_type: "thin"
+hardware:
+  guest_memory_mb: "4096"
+  guest_num_cpus: "2"
+  guest_scsi: "paravirtual"
+networks:
+  guest_net_name: VM Network
+  guest_mac: aa:bb:dd:aa:00:14
+  guest_ip: 10.10.10.100
+  guest_netmask: 255.255.255.0
+  guest_nic_type: vmxnet3
