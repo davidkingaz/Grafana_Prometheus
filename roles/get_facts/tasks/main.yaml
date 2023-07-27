@@ -9,5 +9,5 @@
   register: vcenter_facts
 
 - name: Display vCenter Facts
-  debug:
+  ansible.builtin.debug:
     var: vcenter_facts
