@@ -11,5 +11,5 @@
       register: vm_facts
 
     - name: Display VM Facts
-      debug:
+      ansible.builtin.debug:
         var: vm_facts
