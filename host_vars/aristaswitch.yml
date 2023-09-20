@@ -1,0 +1,7 @@
+---
+ansible_host: 192.168.5.111
+ansible_network_os: arista.eos.eos
+ansible_become: true
+ansible_become_method: enable
+switch_username: ansible
+switch_password: ansible

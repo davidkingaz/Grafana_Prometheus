@@ -21,6 +21,7 @@ hardware:
 networks:
   guest_net_name: VM Network
   guest_mac: aa:bb:dd:aa:00:14
-  guest_ip: 10.10.10.100
-  guest_netmask: 255.255.255.0
+  guest_ip: 192.168.5.115
+  guest_netmask: 255.255.254.0
+  guest_net_gateway: 192.168.4.1
   guest_nic_type: vmxnet3

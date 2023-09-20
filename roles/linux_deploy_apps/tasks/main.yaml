@@ -1,0 +1,172 @@
+---
+# Change hostname
+- name: Set hostname using hostname module
+  ansible.builtin.hostname:
+    name: "{{ vm_name }}"
+
+- name: Update /etc/hosts file
+  ansible.builtin.lineinfile:
+    dest: /etc/hosts
+    regexp: '^(127\.0\.1\.1)\s+.*'
+    line: '127.0.1.1\tlinux01'
+    state: present
+
+# Deploy Applications onto Linux Virtual Machine
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: "{{ installed_state }}"
+
+- name: Add Docker repository GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: "{{ installed_state }}"
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
+    state: "{{ installed_state }}"
+
+# Deploy Docker
+- name: Install Docker
+  ansible.builtin.apt:
+    name: docker-ce
+    state: "{{ installed_state }}"
+    update_cache: true
+
+# Deploy Prometheus
+- name: Run Prometheus container
+  community.docker.docker_container:
+    name: prometheus
+    image: prom/prometheus:latest
+    state: started
+    ports:
+      - "9090:9090"
+
+# Deploy Grafana
+- name: Run Grafana container
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana:latest
+    state: started
+    ports:
+      - "3000:3000"
+    env:
+      GF_SECURITY_ADMIN_USER: "{{ grafana_admin }}"
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
+
+# Create SNMP Exporter configuration
+- name: Ensure SNMP Exporter config directory exists
+  ansible.builtin.file:
+    path: /etc/snmp_exporter/
+    state: directory
+    mode: '0755'
+
+# Copy SNMP YAML to remote host
+- name: Copy dashboard.json to remote host
+  ansible.builtin.copy:
+    src: "/Users/davidking/Documents/developer/IaC_VM/snmp.yml"
+    dest: "/etc/snmp_exporter/snmp.yml"
+    mode: '0644'
+
+# - name: Write SNMP Exporter configuration
+#   ansible.builtin.copy:
+#     dest: "/etc/snmp_exporter/snmp.yml"
+#     content: |
+#       default:
+#         version: 2c
+#         community: READ
+#         max_repetitions: 25
+#     mode: '0644'
+
+# Run the SNMP Exporter container
+- name: Run SNMP Exporter container
+  community.docker.docker_container:
+    name: snmp_exporter
+    image: prom/snmp-exporter:latest
+    state: started
+    ports:
+      - "9116:9116"
+    volumes:
+      - "/etc/snmp_exporter/snmp.yml:/etc/snmp_exporter/snmp.yml"
+
+# Create Prometheus configuration to scrape SNMP Exporter
+- name: Ensure Prometheus config directory exists
+  ansible.builtin.file:
+    path: /etc/prometheus/
+    state: directory
+    mode: '0644'
+
+- name: Write Prometheus configuration for SNMP Exporter
+  ansible.builtin.copy:
+    dest: "/etc/prometheus/prometheus.yml"
+    content: |
+      global:
+        scrape_interval: 15s
+      scrape_configs:
+        - job_name: 'snmp'
+          static_configs:
+            - targets:
+              - '{{ your_arista_switch_ip }}' # removed extra quotes
+          metrics_path: /snmp
+          params:
+            module: [module_name] # updated from 'default' to 'module_name'
+          relabel_configs:
+            - source_labels: [__address__]
+              target_label: __param_target
+            - source_labels: [__param_target]
+              target_label: instance
+            - target_label: __address__
+              replacement: 127.0.0.1:9116  # SNMP Exporter address
+    mode: '0644'
+  notify:
+    - Restart_Prometheus
+
+# Connect Prometheus to Grafana
+- name: Wait for Grafana to start up before configuring
+  ansible.builtin.wait_for:
+    port: 3000
+    delay: 10
+
+- name: Add Prometheus data source to Grafana
+  community.grafana.grafana_datasource:
+    url: http://localhost:3000
+    url_username: "{{ grafana_admin }}"
+    url_password: "{{ grafana_password }}"
+    ds_type: prometheus
+    name: Prometheus
+    ds_url: http://localhost:9090
+    access: proxy
+    state: "{{ installed_state }}"
+
+# Load Grafana dashboard into variable
+- name: Load local dashboard.json content
+  ansible.builtin.set_fact:
+    dashboard_content: "{{ lookup('file', '/Users/davidking/Documents/developer/IaC_VM/dashboard.json') | from_json }}"
+
+# # Copy Grafana dashboard to remote host
+# - name: Copy dashboard.json to remote host
+#   ansible.builtin.copy:
+#     src: "/Users/davidking/Documents/developer/IaC_VM/dashboard.json"
+#     dest: "/tmp/dashboard.json"
+#     mode: '0644'
+
+# # Copy Grafana dashboard into Grafana Docker container
+# - name: Copy dashboard.json into Grafana Docker container
+#   ansible.builtin.command:
+#     cmd: "docker cp /tmp/dashboard.json grafana:/tmp/dashboard.json"
+#   changed_when: false
+
+# Create Grafana dashboard
+- name: Create Grafana Dashboard
+  community.grafana.grafana_dashboard:
+    url: http://localhost:3000
+    url_username: "{{ grafana_admin }}"
+    url_password: "{{ grafana_password }}"
+    state: "{{ installed_state }}"
+    overwrite: true
+    path: "{{ dashboard_content }}"

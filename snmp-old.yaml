@@ -1,0 +1,5 @@
+---
+default:
+  version: 2c
+  community: READ
+  max_repetitions: 25

@@ -1,0 +1,454 @@
+vcenter_facts: about_info:
+    api_type: VirtualCenter
+    api_version: 8.0.1.0
+    build: '21560480'
+    instance_uuid: 689fe9a7-ef4e-4e10-9acf-db988a6a9e0a
+    license_product_name: VMware VirtualCenter Server
+    license_product_version: '8.0'
+    locale_build: '000'
+    locale_version: INTL
+    os_type: linux-x64
+    product_full_name: VMware vCenter Server 8.0.1 build-21560480
+    product_line_id: vpx
+    product_name: VMware vCenter Server
+    vendor: VMware, Inc.
+    version: 8.0.1
+changed: false
+failed: false
+
+datastores: changed: false
+datastores:
+-   accessible: true
+    capacity: 4000762036224
+    datastore_cluster: N/A
+    freeSpace: 1777012310016
+    maintenanceMode: normal
+    multipleHostAccess: false
+    name: ESX02-SATA
+    provisioned: 2224870654511
+    type: VMFS
+    uncommitted: 1120928303
+    url: ds:///vmfs/volumes/646049c1-ea5c11b8-741f-88aedd09d12c/
+-   accessible: true
+    capacity: 1862673629184
+    datastore_cluster: N/A
+    freeSpace: 1716191756288
+    maintenanceMode: normal
+    multipleHostAccess: false
+    name: ESX01-NVMe
+    provisioned: 873375099403
+    type: VMFS
+    uncommitted: 726893226507
+    url: ds:///vmfs/volumes/64bd71ae-86813904-2680-1c697a60cff0/
+-   accessible: true
+    capacity: 949359575040
+    datastore_cluster: N/A
+    freeSpace: 257773281280
+    maintenanceMode: normal
+    multipleHostAccess: true
+    name: KingNAS
+    provisioned: 1053645492224
+    type: NFS41
+    uncommitted: 362059198464
+    url: ds:///vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000/
+-   accessible: true
+    capacity: 862483120128
+    datastore_cluster: N/A
+    freeSpace: 860960587776
+    maintenanceMode: normal
+    multipleHostAccess: false
+    name: ESX02-NVMe
+    provisioned: 1522532352
+    type: VMFS
+    uncommitted: 0
+    url: ds:///vmfs/volumes/64bdb00d-db8ce2eb-c369-88aedd09d12c/
+failed: false
+
+folders: changed: false
+failed: false
+flat_folder_info:
+-   moid: group-v4
+    path: /Datacenter/vm
+-   moid: group-v20
+    path: /Datacenter/vm/vCLS
+-   moid: group-h5
+    path: /Datacenter/host
+-   moid: group-n7
+    path: /Datacenter/network
+-   moid: group-s6
+    path: /Datacenter/datastore
+folder_info:
+    datastoreFolders:
+        moid: group-s6
+        path: /Datacenter/datastore
+        subfolders: {}
+    hostFolders:
+        moid: group-h5
+        path: /Datacenter/host
+        subfolders: {}
+    networkFolders:
+        moid: group-n7
+        path: /Datacenter/network
+        subfolders: {}
+    vmFolders:
+        moid: group-v4
+        path: /Datacenter/vm
+        subfolders:
+            vCLS:
+                moid: group-v20
+                path: /Datacenter/vm/vCLS
+                subfolders: {}
+
+clusters: changed: false
+clusters:
+    KingCluster:
+        datacenter: Datacenter
+        drs_default_vm_behavior: fullyAutomated
+        drs_enable_vm_behavior_overrides: true
+        drs_vmotion_rate: 3
+        enable_ha: false
+        enabled_drs: false
+        enabled_vsan: false
+        ha_admission_control_enabled: true
+        ha_failover_level: 1
+        ha_host_monitoring: enabled
+        ha_restart_priority: medium
+        ha_vm_failure_interval: 30
+        ha_vm_max_failure_window: -1
+        ha_vm_max_failures: 3
+        ha_vm_min_up_time: 120
+        ha_vm_monitoring: vmMonitoringDisabled
+        ha_vm_tools_monitoring: vmMonitoringDisabled
+        hosts:
+        -   folder: /Datacenter/host/KingCluster
+            name: 192.168.5.86
+        -   folder: /Datacenter/host/KingCluster
+            name: 192.168.4.94
+        moid: domain-c18
+        resource_summary:
+            cpuCapacityMHz: 20860
+            cpuUsedMHz: 3636
+            memCapacityMB: 130427
+            memUsedMB: 64521
+            pMemAvailableMB: 0
+            pMemCapacityMB: 0
+            storageCapacityMB: 7319715
+            storageUsedMB: 2921429
+        tags: []
+        vsan_auto_claim_storage: false
+failed: false
+
+all_vms: changed: false
+failed: false
+virtual_machines:
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: ESX01-NVMe
+        url: /vmfs/volumes/64bd71ae-86813904-2680-1c697a60cff0
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm
+    guest_fullname: Ubuntu Linux (64-bit)
+    guest_name: netbox
+    instance_uuid: 5015dea7-7e17-b6d1-8166-6b6810d66237
+    ip_address: 192.168.4.85
+    mac_address:
+    - 00:50:56:95:94:e3
+    moid: vm-1001
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 42158205-0a64-a6fb-8f68-d814cba52ed5
+    vm_network:
+        00:50:56:95:94:e3:
+            ipv4:
+            - 192.168.4.85
+            - fd2e:bf73:2b08:46dc:70a6:c9f7:1d9b:a9a3
+            - fd2e:bf73:2b08:46dc:9eda:707e:c82e:27c
+            ipv6:
+            - fe80::312:4de2:82f2:3afe
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm
+    guest_fullname: Ubuntu Linux (64-bit)
+    guest_name: LinuxHomeServer
+    instance_uuid: 52479e7e-6281-1adc-a920-c8be40328585
+    ip_address: 192.168.5.83
+    mac_address:
+    - 00:0c:29:0b:b3:a6
+    moid: vm-33
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 564daae4-45a2-384c-91ce-f871f90bb3a6
+    vm_network:
+        00:0c:29:0b:b3:a6:
+            ipv4:
+            - 192.168.5.83
+            - fd2e:bf73:2b08:46dc:ccb0:ecd3:ca0e:f953
+            - fd2e:bf73:2b08:46dc:20c:29ff:fe0b:b3a6
+            ipv6:
+            - fe80::20c:29ff:fe0b:b3a6
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: ESX01-NVMe
+        url: /vmfs/volumes/64bd71ae-86813904-2680-1c697a60cff0
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm
+    guest_fullname: Ubuntu Linux (64-bit)
+    guest_name: Linux01
+    instance_uuid: 501541c8-9d44-3fa4-a4c5-556d6dfe8e13
+    ip_address: ''
+    mac_address:
+    - 00:50:56:95:60:58
+    moid: vm-1010
+    power_state: poweredOff
+    resource_pool: null
+    tags: []
+    uuid: 4215fbe4-2788-3f80-ea47-768f21c5822e
+    vm_network: {}
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm
+    guest_fullname: Ubuntu Linux (64-bit)
+    guest_name: Linux
+    instance_uuid: 50158347-5097-40ae-58d2-1dddda1c2abb
+    ip_address: ''
+    mac_address:
+    - 00:50:56:95:a0:ac
+    moid: vm-61
+    power_state: poweredOff
+    resource_pool: null
+    tags: []
+    uuid: 4215759a-4241-9f01-71af-6dcd31bfe4ca
+    vm_network: {}
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm/vCLS
+    guest_fullname: Other (32-bit)
+    guest_name: vCLS-d21e8d6d-f35d-4f4f-b06f-f83efec0c89d
+    instance_uuid: 5015ee98-be67-5391-9a87-202dd65ef0aa
+    ip_address: ''
+    mac_address: []
+    moid: vm-21
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 42156fb6-9998-8e84-47e1-4287e787a61a
+    vm_network: {}
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm
+    guest_fullname: Microsoft Windows 10 (64-bit)
+    guest_name: Virtual-PC
+    instance_uuid: 527af9c0-a3d5-df24-72cb-25f8cfb0b5e0
+    ip_address: 192.168.5.63
+    mac_address:
+    - 00:0c:29:86:89:f2
+    moid: vm-14
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 564d861e-b54b-08c1-9b7f-86cd048689f2
+    vm_network:
+        00:0c:29:86:89:f2:
+            ipv4:
+            - fd2e:bf73:2b08:46dc:e31a:1aad:a932:4aa0
+            - fd2e:bf73:2b08:46dc:b085:c8d9:619b:9f94
+            - 192.168.5.63
+            ipv6:
+            - fe80::b66d:9aec:fb17:ffee
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: ESX01-NVMe
+        url: /vmfs/volumes/64bd71ae-86813904-2680-1c697a60cff0
+    esxi_hostname: 192.168.4.94
+    folder: /Datacenter/vm
+    guest_fullname: Other 3.x or later Linux (64-bit)
+    guest_name: VCSA
+    instance_uuid: 52f786aa-8662-4efa-8fd6-0c1b0a5310de
+    ip_address: 192.168.4.144
+    mac_address:
+    - 00:0c:29:06:0b:02
+    moid: vm-17
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 564de387-b483-b0f4-5fdb-0aed7a060b02
+    vm_network:
+        00:0c:29:06:0b:02:
+            ipv4:
+            - 192.168.4.144
+            ipv6: []
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.5.86
+    folder: /Datacenter/vm
+    guest_fullname: Red Hat Enterprise Linux 7 (64-bit)
+    guest_name: CML 2.2
+    instance_uuid: 52f5b28a-a2e5-8e55-effa-a1125c67849a
+    ip_address: 192.168.4.199
+    mac_address:
+    - 00:0c:29:9b:e8:b7
+    moid: vm-54
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 564d18e0-51b1-bd7d-00f2-636aeb9be8b7
+    vm_network:
+        00:0c:29:9b:e8:b7:
+            ipv4:
+            - 192.168.4.199
+            - fd2e:bf73:2b08:46dc:7a3d:6555:c40d:35c4
+            ipv6:
+            - fe80::c99f:c0fa:bf47:8a68
+        06:20:2b:25:b9:9d:
+            ipv4: []
+            ipv6: []
+        4a:d6:59:b0:b8:28:
+            ipv4: []
+            ipv6: []
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.5.86
+    folder: /Datacenter/vm
+    guest_fullname: Red Hat Enterprise Linux 9 (64-bit)
+    guest_name: Ansible
+    instance_uuid: 5018b7e2-2467-824d-06dc-c4c3afb0a291
+    ip_address: 192.168.4.150
+    mac_address:
+    - 00:50:56:98:02:74
+    moid: vm-55
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 4218ddae-1937-1260-8e36-e120969b66e0
+    vm_network:
+        00:50:56:98:02:74:
+            ipv4:
+            - 192.168.4.150
+            - fd2e:bf73:2b08:46dc:250:56ff:fe98:274
+            ipv6:
+            - fe80::250:56ff:fe98:274
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: KingNAS
+        url: /vmfs/volumes/acad9ae9-d3149d2d-0000-000000000000
+    esxi_hostname: 192.168.5.86
+    folder: /Datacenter/vm
+    guest_fullname: Ubuntu Linux (64-bit)
+    guest_name: LinuxHomeServer2
+    instance_uuid: 5015a1d0-4df2-b6d8-508b-e636bbf25734
+    ip_address: 192.168.5.77
+    mac_address:
+    - 00:50:56:95:9f:8c
+    moid: vm-59
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 42158806-97d1-60e7-1857-a255f6c85087
+    vm_network:
+        00:50:56:95:9f:8c:
+            ipv4:
+            - 192.168.5.77
+            - fd2e:bf73:2b08:46dc:ff36:7df6:6df5:892c
+            - fd2e:bf73:2b08:46dc:250:56ff:fe95:9f8c
+            ipv6:
+            - fe80::250:56ff:fe95:9f8c
+-   allocated: {}
+    attributes: {}
+    cluster: KingCluster
+    datacenter: Datacenter
+    datastore_url:
+    -   name: ESX02-SATA
+        url: /vmfs/volumes/646049c1-ea5c11b8-741f-88aedd09d12c
+    esxi_hostname: 192.168.5.86
+    folder: /Datacenter/vm/vCLS
+    guest_fullname: Other (32-bit)
+    guest_name: vCLS-aca005b3-22a4-46be-b07e-e31a45c95475
+    instance_uuid: 5015b5af-b9c7-a000-797f-5082cb0875c4
+    ip_address: ''
+    mac_address: []
+    moid: vm-53
+    power_state: poweredOn
+    resource_pool: null
+    tags: []
+    uuid: 42157310-b2fe-55d0-f2b7-f39ac94b2304
+    vm_network: {}
+
+networks: changed: false
+failed: false
+host_vmk_info:
+    192.168.4.94:
+    -   device: vmk0
+        dhcp: true
+        enable_ft: false
+        enable_management: true
+        enable_vmotion: false
+        enable_vsan: false
+        ipv4_address: 192.168.4.94
+        ipv4_subnet_mask: 255.255.254.0
+        key: key-vim.host.VirtualNic-vmk0
+        mac: 1c:69:7a:60:cf:f0
+        mtu: 1500
+        portgroup: ''
+        stack: defaultTcpipStack
+    192.168.5.86:
+    -   device: vmk0
+        dhcp: true
+        enable_ft: false
+        enable_management: true
+        enable_vmotion: false
+        enable_vsan: false
+        ipv4_address: 192.168.5.86
+        ipv4_subnet_mask: 255.255.254.0
+        key: key-vim.host.VirtualNic-vmk0
+        mac: 88:ae:dd:09:d1:2c
+        mtu: 1500
+        portgroup: ''
+        stack: defaultTcpipStack

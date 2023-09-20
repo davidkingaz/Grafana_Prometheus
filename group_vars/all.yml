@@ -1,5 +1,9 @@
 ---
+installed_state: present
+
 # Credentials for the connecting to the device
-ansible_user: ansible
-ansible_ssh_pass: ansible
 host_key_checking: false
+your_arista_switch_ip: 192.168.5.111
+
+grafana_admin: "adminuser"
+grafana_password: "adminpassword"
