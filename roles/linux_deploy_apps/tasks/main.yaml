@@ -89,6 +89,7 @@
     name: snmp_exporter
     image: prom/snmp-exporter:latest
     state: started
+    restart: true
     ports:
       - "9116:9116"
     volumes:
@@ -114,17 +115,25 @@
               - '{{ your_arista_switch_ip }}' # removed extra quotes
           metrics_path: /snmp
           params:
-            module: [module_name] # updated from 'default' to 'module_name'
+            module: [if_mib]
           relabel_configs:
             - source_labels: [__address__]
               target_label: __param_target
             - source_labels: [__param_target]
               target_label: instance
             - target_label: __address__
-              replacement: 127.0.0.1:9116  # SNMP Exporter address
+              replacement: {{ ansible_host }}:9116  # SNMP Exporter address
     mode: '0644'
-  notify:
-    - Restart_Prometheus
+
+- name: Restart_Prometheus
+  community.docker.docker_container:
+    name: prometheus
+    image: prom/prometheus:latest
+    state: started
+    ports:
+      - "9090:9090"
+    volumes:
+      - "/etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
 
 # Connect Prometheus to Grafana
 - name: Wait for Grafana to start up before configuring
@@ -139,27 +148,16 @@
     url_password: "{{ grafana_password }}"
     ds_type: prometheus
     name: Prometheus
-    ds_url: http://localhost:9090
+    ds_url: http://{{ ansible_host }}:9090
     access: proxy
     state: "{{ installed_state }}"
 
-# Load Grafana dashboard into variable
-- name: Load local dashboard.json content
-  ansible.builtin.set_fact:
-    dashboard_content: "{{ lookup('file', '/Users/davidking/Documents/developer/IaC_VM/dashboard.json') | from_json }}"
-
-# # Copy Grafana dashboard to remote host
-# - name: Copy dashboard.json to remote host
-#   ansible.builtin.copy:
-#     src: "/Users/davidking/Documents/developer/IaC_VM/dashboard.json"
-#     dest: "/tmp/dashboard.json"
-#     mode: '0644'
-
-# # Copy Grafana dashboard into Grafana Docker container
-# - name: Copy dashboard.json into Grafana Docker container
-#   ansible.builtin.command:
-#     cmd: "docker cp /tmp/dashboard.json grafana:/tmp/dashboard.json"
-#   changed_when: false
+# Copy Grafana dashboard to remote host
+- name: Copy dashboard.json to remote host
+  ansible.builtin.copy:
+    src: "/Users/davidking/Documents/developer/IaC_VM/dashboard.json"
+    dest: "/tmp/dashboard.json"
+    mode: '0644'
 
 # Create Grafana dashboard
 - name: Create Grafana Dashboard
@@ -169,4 +167,5 @@
     url_password: "{{ grafana_password }}"
     state: "{{ installed_state }}"
     overwrite: true
-    path: "{{ dashboard_content }}"
+    commit_message: "Updated by Ansible"
+    path: "/tmp/dashboard.json"

@@ -1,4 +1,5 @@
 {
+  "dashboard": {
     "annotations": {
       "list": []
     },
@@ -51,13 +52,13 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "rate(ifInOctets{instance=\"your_arista_switch_ip\"}[5m])",
+            "expr": "rate(ifInOctets{instance=\"192.168.5.111\"}[5m])",
             "interval": "",
             "legendFormat": "Ingress Traffic",
             "refId": "A"
           },
           {
-            "expr": "rate(ifOutOctets{instance=\"your_arista_switch_ip\"}[5m])",
+            "expr": "rate(ifOutOctets{instance=\"192.168.5.111\"}[5m])",
             "interval": "",
             "legendFormat": "Egress Traffic",
             "refId": "B"
@@ -144,4 +145,7 @@
     "title": "Arista Switch Stats",
     "uid": null,
     "version": 0
-  }  
+  }
+,
+"overwrite": false
+}
