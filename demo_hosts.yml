@@ -1,0 +1,63 @@
+---
+all:
+  children:
+    stage:
+      children:
+        production:
+          hosts:
+            vcsa:
+        development:
+          hosts:
+    location:
+      children:
+        phoenix:
+        denver:
+        lab:
+          hosts:
+            vcsa:
+    devicetype:
+      children:
+        firewall:
+        vcenter:
+          hosts:
+            vcsa:
+        switch:
+        wlanap:
+        azure:
+          hosts:
+            azure_vnet01:
+    servers:
+      children:
+        windows:
+        linux:
+          hosts:
+            linux01:
+    vendor:
+      children:
+        vmware:
+          hosts:
+            vcsa:
+        redhat:
+        azure:
+          hosts:
+            azure_vnet01:
+    network:
+      children:
+        switches:
+          children:
+            arista:
+              hosts:
+                AristaSwitch:
+                  ansible_host: 192.168.5.111
+                  ansible_network_os: arista.eos.eos
+                  ansible_connection: ansible.netcommon.network_cli
+                  ansible_become: true
+                  ansible_become_method: enable
+                cisco:
+                  hosts:
+                    ciscoswitch:
+                      ansible_host: 192.168.4.204
+    source_of_truth:
+      hosts:
+        netbox:
+          ansible_host: 192.168.4.85
