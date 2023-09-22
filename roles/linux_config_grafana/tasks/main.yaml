@@ -1,5 +1,10 @@
 ---
-# CONFIG GRAFANA
+# Create Dashboard JSON from template
+- name: Generate JSON from template
+  ansible.builtin.template:
+    src: "dashboard_template.j2"
+    dest: "test.json"
+    mode: '0644'
 
 # Copy Grafana dashboard to remote host
 - name: Copy dashboard.json to remote host
